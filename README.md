@@ -130,3 +130,46 @@ Il calcolo delle forze tra i corpi ha complessità \( O(n^2) \), perciò i tempi
 3. **Svantaggi per pochi corpi**: Per un numero ridotto di corpi, MPI + OpenMP ha un sovraccarico maggiore rispetto a OpenMP puro, ma diventa più efficiente con carichi più alti.
 
 ---
+
+# Istruzioni per Compilare ed Eseguire le Versioni
+
+## Versione Serial
+### Compilazione
+```bash
+gcc -o n-body_serial n-body_serial.c -lm
+```
+## Esecuzione
+```bash
+./n-body_serial <numero_corpi>
+```
+
+## Versione OpenMP
+### Compilazione su macOS
+```bash
+gcc-14 -fopenmp -o n-body_openmp n-body_openmp.c -lm
+```
+### Compilazione su Linux
+```bash
+gcc -fopenmp -o n-body_openmp n-body_openmp.c -lm
+```
+
+### Esecuzione
+```bash
+./n-body_openmp <numero_corpi> <numero_thread>
+```
+
+## Versione Versione MPI + OpenMP
+### Compilazione su macOS
+```bash
+gcc-14 -fopenmp -I/opt/homebrew/opt/openmpi/include -L/opt/homebrew/opt/openmpi/lib n-body_mpiomp.c -o n-body_mpiomp -lmpi
+```
+### Compilazione su Linux
+```bash
+mpicc -fopenmp -o n-body_mpiomp n-body_mpiomp.c -lm
+```
+
+### Esecuzione
+```bash
+mpirun -np <numero_processi> ./n-body_mpiomp <numero_corpi> <numero_thread>
+```
+
